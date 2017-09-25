@@ -55,13 +55,6 @@ class LB_Stat_Counter_Front {
 			scJsHost+
 			"statcounter.com/counter/counter.js'></"+"script>");
 		</script>
-		<noscript>
-			<div class="statcounter"><a title="real time web
-			analytics" href="http://statcounter.com/"
-			target="_blank"><img class="statcounter"
-			src="//c.statcounter.com/11416276/0/db1d9efc/1/" alt="real
-			time web analytics"></a></div>
-		</noscript>
 		<!-- End of StatCounter Code -->
 		<?php
 
