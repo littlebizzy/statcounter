@@ -77,6 +77,7 @@ We released this plugin in response to our managed hosting clients asking for be
 
 = 1.0.2 =
 * minor code tweaks
+* MUST RE-INPUT SETTINGS!
 
 = 1.0.1 =
 * removed noscript snippet (spammy)
