@@ -18,7 +18,7 @@ class LB_Stat_Counter_Settings {
 	 *
 	 * @var string
 	 */
-	protected $settings_slug = 'sc-littlebizzy';
+	protected $settings_slug = 'statcounter';
 
 	/**
 	 * Holder for saved settings
