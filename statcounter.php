@@ -3,15 +3,19 @@
 Plugin Name: StatCounter
 Plugin URI: https://www.littlebizzy.com/plugins/statcounter
 Description: Inserts StatCounter tracking code just above the closing body tag to ensure the fastest loading speed and to avoid conflicting with any other scripts.
-Version: 1.0.2
+Version: 1.0.3
 Author: LittleBizzy
 Author URI: https://www.littlebizzy.com
-Text Domain: sc-littlebizzy
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt
+Text Domain: sc-littlebizzy
 Domain Path: /lang
 Prefix: STCNTR
 */
+
+// Admin Notices module
+require_once dirname(__FILE__).'/admin-notices.php';
+STCNTR_Admin_Notices::instance(__FILE__);
 
 
 /**
