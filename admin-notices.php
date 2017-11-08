@@ -6,7 +6,7 @@
  * @package WordPress
  * @subpackage Admin Notices
  */
-final class NTFTHP_Admin_Notices {
+final class STCNTR_Admin_Notices {
 
 
 
@@ -18,9 +18,9 @@ final class NTFTHP_Admin_Notices {
 	/**
 	 * Rate Us
 	 */
-	private $days_before_display_rate_us = 3;
-	private $days_dismissing_rate_us = 240; // 8 months
-	private $rate_us_url = 'https://wordpress.org/support/plugin/404-to-homepage-littlebizzy/reviews/#new-post';
+	private $days_before_display_rate_us = 3; // 3 days delay
+	private $days_dismissing_rate_us = 240; // 8 months reappear
+	private $rate_us_url = 'https://wordpress.org/support/plugin/sc-littlebizzy/reviews/#new-post';
 	private $rate_us_message = 'Thanks for using <strong>%plugin%</strong>. Please support our free work by rating this plugin with 5 stars on WordPress.org. <a href="%url%" target="_blank">Click here to rate us.</a>';
 
 
@@ -28,13 +28,28 @@ final class NTFTHP_Admin_Notices {
 	/**
 	 * Plugin suggestions
 	 */
-	private $days_dismissing_suggestions = 150; // 5 months
+	private $days_dismissing_suggestions = 150; // 5 months reappear
 	private $suggestions_message = '%plugin% recommends the following free plugins:';
 	private $suggestions = array(
+		'ga-littlebizzy' => array(
+			'name' => 'Google Analytics',
+			'desc' => 'Inserts Google Analytics code just above the closing body tag to ensure fastest performance possible and to avoid conflicting with any other scripts.',
+			'filename' => 'google-analytics.php',
+		),
 		'force-https-littlebizzy' => array(
 			'name' => 'Force HTTPS',
 			'desc' => 'Redirects all HTTP requests to the HTTPS version and fixes all insecure static resources without altering the database (also works with CloudFlare).',
 			'filename' => 'force-https.php',
+		),
+		'duplicate-post-littlebizzy' => array(
+			'name' => 'Duplicate Post',
+			'desc' => 'Easily duplicate (clone) any blog post, custom post, or page in WordPress which are then saved in Draft mode, saving you tons of time and headache.',
+			'filename' => 'duplicate-post.php',
+		),
+		'maintenance-mode-littlebizzy' => array(
+			'name' => 'Maintenance Mode',
+			'desc' => 'Minimalistic plugin with a simple one-click on/off switch and zero settings to worry about, featuring default WordPress styling without any images.',
+			'filename' => 'maintenance-mode.php',
 		),
 		'remove-query-strings-littlebizzy' => array(
 			'name' => 'Remove Query Strings',
@@ -60,21 +75,6 @@ final class NTFTHP_Admin_Notices {
 			'name' => 'Disable Emojis',
 			'desc' => 'Completely disables both the old and new versions of WordPress emojis, removes the corresponding javascript calls, and improves page loading times.',
 			'filename' => 'disable-emojis.php',
-		),
-		'disable-xml-rpc-littlebizzy' => array(
-			'name' => 'Disable XML-RPC',
-			'desc' => 'Completely disables all XML-RPC related functions in WordPress including pingbacks and trackbacks, and helps prevent attacks on the xmlrpc.php file.',
-			'filename' => 'disable-xml-rpc.php',
-		),
-		'disable-author-pages-littlebizzy' => array(
-			'name' => 'Disable Author Pages',
-			'desc' => 'Completely disables author archives which then become 404 errors, converts author links to homepage links, and works with or without fancy permalinks.',
-			'filename' => 'disable-author-pages.php',
-		),
-		'disable-search-littlebizzy' => array(
-			'name' => 'Disable Search',
-			'desc' => 'Completely disables the built-in WordPress search function to prevent snoopers or bots from querying your database or slowing down your website.',
-			'filename' => 'disable-search.php',
 		),
 		'virtual-robotstxt-littlebizzy' => array(
 			'name' => 'Virtual Robots.txt',
