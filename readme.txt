@@ -57,7 +57,7 @@ This plugin generates multiple [Admin Notices](https://codex.wordpress.org/Plugi
 
 This plugin was partially inspired either in "code or concept" by the open-source software and discussions mentioned below:
 
-[Official StatCounter Plugin](https://wordpress.org/plugins/official-statcounter-plugin-for-wordpress/)
+* [Official StatCounter Plugin](https://wordpress.org/plugins/official-statcounter-plugin-for-wordpress/)
 
 #### Recommended Plugins ####
 
