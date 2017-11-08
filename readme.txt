@@ -25,8 +25,10 @@ Inserts StatCounter tracking code just above the closing body tag to ensure the 
 
 Using this plugin will help you avoid errors on your site caused by the "official" version of StatCounter plugin for WordPress such as the Chrome console error below:
 
-    (index):3834 A Parser-blocking, cross site (i.e. different eTLD+1) script, https://secure.statcounter.com/counter/counter.js, is invoked via document.write. The network request for this script MAY be blocked by the browser in this or a future page load due to poor network connectivity. If blocked in this page load, it will be confirmed in a subsequent console message.See https://www.chromestatus.com/feature/5718547946799104 for more details.
-(anonymous) @ (index):3834
+`(index):3834 A Parser-blocking, cross site (i.e. different eTLD+1) script, https://secure.statcounter.com/counter/counter.js, is invoked via document.write. The network request for this script MAY be blocked by the browser in this or a future page load due to poor network connectivity. If blocked in this page load, it will be confirmed in a subsequent console message.See https://www.chromestatus.com/feature/5718547946799104 for more details.
+(anonymous) @ (index):3834`
+
+The tracking code snippet is also better optimized for speed and SSL/HTTPS.
 
 #### Compatibility ####
 
@@ -42,7 +44,7 @@ This plugin has been designed for use on LEMP (Nginx) web servers with PHP 7.0 a
   * Transients: No
   * Options: Yes
   * Creates New Tables: No
-* Database Queries: Backend Only (Options API Cache)
+* Database Queries: Backend + Frontend (Options API Cache)
 * Must-Use Support: Yes (Use With [Autoloader](https://github.com/littlebizzy/autoloader))
 * Multisite Support: No
 * Uninstalls Data: Yes
