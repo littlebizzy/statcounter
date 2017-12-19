@@ -1,6 +1,7 @@
 === StatCounter ===
 
 Contributors: littlebizzy
+Donate link: https://www.patreon.com/littlebizzy
 Tags: statcounter, analytics, traffic, stats, code
 Requires at least: 4.4
 Tested up to: 4.9
