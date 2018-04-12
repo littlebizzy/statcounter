@@ -3,7 +3,7 @@
 Plugin Name: StatCounter
 Plugin URI: https://www.littlebizzy.com/plugins/statcounter
 Description: Inserts StatCounter tracking code just above the closing body tag to ensure the fastest loading speed and to avoid conflicting with any other scripts.
-Version: 1.0.4
+Version: 1.0.5
 Author: LittleBizzy
 Author URI: https://www.littlebizzy.com
 License: GPLv3
@@ -16,6 +16,15 @@ Prefix: STCNTR
 // Admin Notices module
 require_once dirname(__FILE__).'/admin-notices.php';
 STCNTR_Admin_Notices::instance(__FILE__);
+
+/**
+ * Admin Notices Multisite check
+ * Uncomment //return to disable this plugin on Multisite installs
+ */
+require_once dirname(__FILE__).'/admin-notices-ms.php';
+if (false !== \LittleBizzy\StatCounter\Admin_Notices_MS::instance(__FILE__)) {
+	//return;
+}
 
 
 /**
