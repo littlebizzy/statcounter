@@ -7,7 +7,7 @@ Requires at least: 4.4
 Tested up to: 4.9
 Requires PHP: 7.0
 Multisite support: No
-Stable tag: 1.0.5
+Stable tag: 1.0.6
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 Prefix: STCNTR
@@ -157,6 +157,9 @@ We released this plugin in response to our managed hosting clients asking for be
 3. Visit `/wp-admin/options-general.php?page=statcounter`
 
 == Changelog ==
+
+= 1.0.6 =
+* updated recommended plugins
 
 = 1.0.5 =
 * added warning for Multisite installations
