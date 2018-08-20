@@ -3,7 +3,7 @@
 Plugin Name: StatCounter
 Plugin URI: https://www.littlebizzy.com/plugins/statcounter
 Description: Inserts StatCounter tracking code just above the closing body tag to ensure the fastest loading speed and to avoid conflicting with any other scripts.
-Version: 1.0.5
+Version: 1.0.6
 Author: LittleBizzy
 Author URI: https://www.littlebizzy.com
 License: GPLv3
