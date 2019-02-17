@@ -1,0 +1,16 @@
+{
+    "name": "littlebizzy/statcounter",
+    "type": "wordpress-plugin",
+    "license": "GPLv3",
+    "homepage": "https://www.littlebizzy.com/plugins/statcounter",
+    "description": "Inserts StatCounter tracking code just above the closing body tag to ensure the fastest loading speed and to avoid conflicting with any other scripts.",
+    "keywords": ["wordpress","plugin","statcounter","stat counter","traffic","analytics","tracking","script","code","snippet","insert","footer"],
+    "support": {
+        "issues": "https://github.com/littlebizzy/statcounter/issues",
+        "forum": "https://www.littlebizzy.com/members"
+    }
+    "require": {
+        "php": "^7.2",
+        "composer/installers": "~1.0"
+    }
+}
