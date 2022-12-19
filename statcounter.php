@@ -2,29 +2,24 @@
 /*
 Plugin Name: StatCounter
 Plugin URI: https://www.littlebizzy.com/plugins/statcounter
-Description: Inserts StatCounter tracking code just above the closing body tag to ensure the fastest loading speed and to avoid conflicting with any other scripts.
-Version: 1.0.6
+Description: Optimized StatCounter tracking
+Version: 1.1.0
 Author: LittleBizzy
 Author URI: https://www.littlebizzy.com
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt
-Text Domain: sc-littlebizzy
-Domain Path: /lang
+GitHub Plugin URI: https://github.com/littlebizzy/statcounter
+Primary Branch: master
 Prefix: STCNTR
 */
 
-// Admin Notices module
-require_once dirname(__FILE__).'/admin-notices.php';
-STCNTR_Admin_Notices::instance(__FILE__);
 
-/**
- * Admin Notices Multisite check
- * Uncomment //return to disable this plugin on Multisite installs
- */
-require_once dirname(__FILE__).'/admin-notices-ms.php';
-if (false !== \LittleBizzy\StatCounter\Admin_Notices_MS::instance(__FILE__)) {
-	//return;
-}
+// disable wordpress.org updates
+add_filter( 'gu_override_dot_org', function() {
+    return [ 
+        'statcounter/statcounter.php'
+    ];
+});
 
 
 /**
@@ -49,24 +44,14 @@ class LB_Stat_Counter {
 
 		$this->lang();
 
-		include $this->dir() . 'includes/class-lb-stat-counter-settings.php';
+		include $this->dir() . 'inc/class-lb-stat-counter-settings.php';
 		lb_stat_counter_settings()->init();
 
 		if ( ! is_admin() ) {
-			include $this->dir() . 'includes/class-lb-stat-counter-front.php';
+			include $this->dir() . 'inc/class-lb-stat-counter-front.php';
 			lb_stat_counter_front()->init();
 		}
 
-	}
-
-	/**
-	 * Loads the translation files.
-	 *
-	 * @since 1.0.0
-	 * @return void
-	 */
-	public function lang() {
-		load_plugin_textdomain( 'sc-littlebizzy', false, basename( dirname( __FILE__ ) ) . '/lang' );
 	}
 
 	/**
