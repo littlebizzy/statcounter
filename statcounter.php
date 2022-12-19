@@ -42,8 +42,6 @@ class LB_Stat_Counter {
 	 */
 	public function init() {
 
-		$this->lang();
-
 		include $this->dir() . 'inc/class-lb-stat-counter-settings.php';
 		lb_stat_counter_settings()->init();
 
