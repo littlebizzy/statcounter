@@ -4,8 +4,13 @@ Optimized StatCounter tracking
 
 ## Changelog
 
+### 1.1.0
+- major code restructure
+- support for Git Updater
+- disabled wordpress.org update checks
+
 ### 1.0.6
-* updated recommended plugins
+- updated recommended plugins
 
 ### 1.0.5
 - added warning for Multisite installations
