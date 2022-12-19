@@ -1,21 +1,30 @@
 # StatCounter
 
-Inserts StatCounter tracking code just above the closing body tag to ensure the fastest loading speed and to avoid conflicting with any other scripts.
+Optimized StatCounter tracking
 
-* [Plugin Homepage (LittleBizzy.com)](https://www.littlebizzy.com/plugins/statcounter)
-* [Free Facebook Group](https://www.facebook.com/groups/littlebizzy/)
+## Changelog
 
-### Defined Constants
+### 1.0.6
+* updated recommended plugins
 
-    /* Plugin Meta */
-    define('DISABLE_NAG_NOTICES', true);
+### 1.0.5
+- added warning for Multisite installations
+- updated recommended plugins
 
-### Compatibility
+### 1.0.4
+- tested with WP 4.9
+- added support for `define('DISABLE_NAG_NOTICES', true);`
 
-This plugin has been designed for use on [SlickStack](https://slickstack.io) web servers with PHP 7.2 and MySQL 5.7 to achieve best performance. All of our plugins are meant for single site WordPress installations only — for both performance and usability reasons, we strongly recommend avoiding WordPress Multisite for the vast majority of your projects.
+### 1.0.3
+- added recommended plugins notice
+- added rating request notice
 
-Any of our WordPress plugins may also be loaded as "Must-Use" plugins (meaning that they load first, and cannot be deactivated) by using our free [Autoloader](https://github.com/littlebizzy/autoloader) script in the `mu-plugins` directory.
+### 1.0.2
+- MUST RE-INPUT SETTINGS!!!
+- minor code tweaks
 
-### Support Issues
+### 1.0.1
+- removed `noscript` snippet (spammy)
 
-Please do not submit Pull Requests. Instead, kindly create a new Issue with relevant information if you are an experienced developer, otherwise you may become a [**LittleBizzy.com Member**](https://www.littlebizzy.com/members) if your company requires official support.
+### 1.0.0
+- initial release
