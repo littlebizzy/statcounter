@@ -3,7 +3,7 @@
 Plugin Name: StatCounter
 Plugin URI: https://www.littlebizzy.com/plugins/statcounter
 Description: Optimized StatCounter tracking
-Version: 1.1.0
+Version: 1.1.1
 Author: LittleBizzy
 Author URI: https://www.littlebizzy.com
 License: GPLv3
@@ -15,11 +15,15 @@ Prefix: STCNTR
 
 
 // disable wordpress.org updates
-add_filter( 'gu_override_dot_org', function() {
-    return [ 
-        'statcounter/statcounter.php'
-    ];
-});
+add_filter(
+    'gu_override_dot_org',
+    function ( $overrides ) {
+        return array_merge(
+            $overrides,
+            array( 'statcounter/statcounter.php' )
+        );
+    }
+);
 
 
 /**
