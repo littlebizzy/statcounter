@@ -4,6 +4,9 @@ Optimized StatCounter tracking
 
 ## Changelog
 
+### 1.1.1
+- improved disable wordpress.org snippet
+
 ### 1.1.0
 - major code restructure
 - support for Git Updater
