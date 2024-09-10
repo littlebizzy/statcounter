@@ -109,17 +109,20 @@ function statcounter_add_tracking_code() {
     $project_id = $settings['project_id'] ?? '';
     $security_code = $settings['security_code'] ?? '';
 
-    // Always output the script, even with empty values
+    // New line after the closing PHP tag for proper HTML source formatting
     ?>
+    
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        var scProject = '<?php echo esc_js( $project_id ); ?>';
-        var scSecurity = '<?php echo esc_js( $security_code ); ?>';
-        var scJsHost = document.location.protocol === 'https:' ? 'https://secure.' : 'http://www.';
-        var script = document.createElement('script');
-        script.src = scJsHost + 'statcounter.com/counter/counter.js';
-        document.body.appendChild(script);
-    });
+    (function() {
+        const scProject = '<?php echo esc_js( $project_id ); ?>';
+        const scSecurity = '<?php echo esc_js( $security_code ); ?>';
+        
+        if (scProject && scSecurity) {
+            const script = document.createElement('script');
+            script.src = 'https://secure.statcounter.com/counter/counter.js';
+            document.body.appendChild(script);
+        }
+    })();
     </script>
     <?php
 }
