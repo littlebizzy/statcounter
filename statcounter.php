@@ -106,15 +106,15 @@ function statcounter_render_settings_page() {
 function statcounter_add_tracking_code() {
     // Retrieve the settings from the database
     $settings = get_option( 'statcounter', [] );
-    $project_id = esc_js( $settings['project_id'] ?? '' );
-    $security_code = esc_js( $settings['security_code'] ?? '' );
+    $project_id = $settings['project_id'] ?? '';
+    $security_code = $settings['security_code'] ?? '';
 
     // Always output the script, even with empty values
     ?>
     <script>
     document.addEventListener('DOMContentLoaded', function() {
-        var scProject = '<?php echo $project_id; ?>';
-        var scSecurity = '<?php echo $security_code; ?>';
+        var scProject = '<?php echo esc_js( $project_id ); ?>';
+        var scSecurity = '<?php echo esc_js( $security_code ); ?>';
         var scJsHost = document.location.protocol === 'https:' ? 'https://secure.' : 'http://www.';
         var script = document.createElement('script');
         script.src = scJsHost + 'statcounter.com/counter/counter.js';
