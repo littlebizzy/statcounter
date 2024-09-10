@@ -10,10 +10,9 @@ License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt
 GitHub Plugin URI: https://github.com/littlebizzy/statcounter
 Primary Branch: master
-Prefix: STCNTR
 */
 
-// Ensure direct file access protection
+// Prevent direct access
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
@@ -50,7 +49,7 @@ function statcounter_register_settings() {
     add_settings_field(
         'statcounter_project_id',
         __( 'Project ID', 'statcounter' ),
-        'statcounter_project_id_callback',
+        'statcounter_render_project_id_field',
         'statcounter',
         'statcounter_settings_section'
     );
@@ -58,7 +57,7 @@ function statcounter_register_settings() {
     add_settings_field(
         'statcounter_security_code',
         __( 'Security Code', 'statcounter' ),
-        'statcounter_security_code_callback',
+        'statcounter_render_security_code_field',
         'statcounter',
         'statcounter_settings_section'
     );
@@ -68,22 +67,22 @@ add_action( 'admin_init', 'statcounter_register_settings' );
 // Sanitize settings input
 function statcounter_sanitize_settings( $input ) {
     return [
-        'project_id'    => sanitize_text_field( $input['project_id'] ),
-        'security_code' => sanitize_text_field( $input['security_code'] ),
+        'project_id'    => sanitize_text_field( $input['project_id'] ?? '' ),
+        'security_code' => sanitize_text_field( $input['security_code'] ?? '' ),
     ];
 }
 
-// Callback for project ID field
-function statcounter_project_id_callback() {
-    $options = get_option( 'statcounter' );
-    $project_id = isset( $options['project_id'] ) ? $options['project_id'] : '';
+// Render project ID field
+function statcounter_render_project_id_field() {
+    $options = get_option( 'statcounter', [] );
+    $project_id = $options['project_id'] ?? '';
     echo '<input type="text" id="statcounter_project_id" name="statcounter[project_id]" value="' . esc_attr( $project_id ) . '" class="regular-text" />';
 }
 
-// Callback for security code field
-function statcounter_security_code_callback() {
-    $options = get_option( 'statcounter' );
-    $security_code = isset( $options['security_code'] ) ? $options['security_code'] : '';
+// Render security code field
+function statcounter_render_security_code_field() {
+    $options = get_option( 'statcounter', [] );
+    $security_code = $options['security_code'] ?? '';
     echo '<input type="text" id="statcounter_security_code" name="statcounter[security_code]" value="' . esc_attr( $security_code ) . '" class="regular-text" />';
 }
 
@@ -103,21 +102,19 @@ function statcounter_render_settings_page() {
     <?php
 }
 
-// Add the tracking code to the footer, always inject JS
+// Add the tracking code to the footer
 function statcounter_add_tracking_code() {
     // Retrieve the settings from the database
     $settings = get_option( 'statcounter', [] );
-
-    // Use empty strings as placeholders if the settings are empty
-    $project_id    = ! empty( $settings['project_id'] ) ? $settings['project_id'] : '';
-    $security_code = ! empty( $settings['security_code'] ) ? $settings['security_code'] : '';
+    $project_id = esc_js( $settings['project_id'] ?? '' );
+    $security_code = esc_js( $settings['security_code'] ?? '' );
 
     // Always output the script, even with empty values
     ?>
     <script>
     document.addEventListener('DOMContentLoaded', function() {
-        var scProject = '<?php echo esc_js( $project_id ); ?>';
-        var scSecurity = '<?php echo esc_js( $security_code ); ?>';
+        var scProject = '<?php echo $project_id; ?>';
+        var scSecurity = '<?php echo $security_code; ?>';
         var scJsHost = document.location.protocol === 'https:' ? 'https://secure.' : 'http://www.';
         var script = document.createElement('script');
         script.src = scJsHost + 'statcounter.com/counter/counter.js';
