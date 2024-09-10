@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Disable WordPress.org updates for this plugin
-add_filter( 'gu_override_dot_org', function ( $overrides ) {
+add_filter( 'gu_override_dot_org', function( $overrides ) {
     $overrides[] = 'statcounter/statcounter.php';
     return $overrides;
 });
@@ -69,16 +69,23 @@ function statcounter_render_settings_page() {
         <form method="post" action="options.php">
             <?php
             settings_fields( 'statcounter' );
-            do_settings_sections( 'statcounter' );
             ?>
             <table class="form-table" role="presentation">
                 <tr>
-                    <th scope="row"><?php esc_html_e( 'Project ID', 'statcounter' ); ?></th>
-                    <td><input type="text" name="statcounter[project_id]" value="<?php echo esc_attr( $settings['project_id'] ); ?>" /></td>
+                    <th scope="row">
+                        <label for="statcounter_project_id"><?php esc_html_e( 'Project ID', 'statcounter' ); ?></label>
+                    </th>
+                    <td>
+                        <input type="text" id="statcounter_project_id" name="statcounter[project_id]" value="<?php echo esc_attr( $settings['project_id'] ); ?>" class="regular-text" />
+                    </td>
                 </tr>
                 <tr>
-                    <th scope="row"><?php esc_html_e( 'Security Code', 'statcounter' ); ?></th>
-                    <td><input type="text" name="statcounter[security_code]" value="<?php echo esc_attr( $settings['security_code'] ); ?>" /></td>
+                    <th scope="row">
+                        <label for="statcounter_security_code"><?php esc_html_e( 'Security Code', 'statcounter' ); ?></label>
+                    </th>
+                    <td>
+                        <input type="text" id="statcounter_security_code" name="statcounter[security_code]" value="<?php echo esc_attr( $settings['security_code'] ); ?>" class="regular-text" />
+                    </td>
                 </tr>
             </table>
             <?php submit_button(); ?>
@@ -93,12 +100,15 @@ function statcounter_add_tracking_code() {
 
     if ( ! empty( $settings['project_id'] ) && ! empty( $settings['security_code'] ) ) {
         ?>
-        <script type="text/javascript">
-        var sc_project = '<?php echo esc_js( $settings['project_id'] ); ?>';
-        var sc_invisible = 1;
-        var sc_security = '<?php echo esc_js( $settings['security_code'] ); ?>';
-        var scJsHost = (("https:" == document.location.protocol) ? "https://secure." : "http://www.");
-        document.write("<sc" + "ript type='text/javascript' src='" + scJsHost + "statcounter.com/counter/counter.js'></" + "script>");
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const scProject = '<?php echo esc_js( $settings['project_id'] ); ?>';
+            const scSecurity = '<?php echo esc_js( $settings['security_code'] ); ?>';
+            const scJsHost = document.location.protocol === 'https:' ? 'https://secure.' : 'http://www.';
+            const script = document.createElement('script');
+            script.src = scJsHost + 'statcounter.com/counter/counter.js';
+            document.body.appendChild(script);
+        });
         </script>
         <?php
     }
