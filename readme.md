@@ -4,6 +4,14 @@ Optimized StatCounter tracking
 
 ## Changelog
 
+### 2.0.0
+- completely refactored code to WordPress standards
+- latest version of StatCounter tracking snippet (HTTPS-only now)
+- using WP Settings API now and cleaner code
+- improved security and performance
+- support for PHP 7.0 to PHP 8.3
+- support for Multisite
+
 ### 1.1.1
 - improved disable wordpress.org snippet
 
