@@ -37,7 +37,11 @@ add_action( 'admin_menu', 'statcounter_add_settings_page' );
 
 // Register and initialize settings
 function statcounter_register_settings() {
-    register_setting( 'statcounter_settings_group', 'statcounter', 'statcounter_sanitize_settings' );
+    register_setting(
+        'statcounter_settings_group', 
+        'statcounter', 
+        'statcounter_sanitize_settings'
+    );
 
     add_settings_section(
         'statcounter_settings_section', 
@@ -66,33 +70,49 @@ add_action( 'admin_init', 'statcounter_register_settings' );
 
 // Sanitize settings input
 function statcounter_sanitize_settings( $input ) {
-    return [
-        'project_id'    => sanitize_text_field( $input['project_id'] ?? '' ),
-        'security_code' => sanitize_text_field( $input['security_code'] ?? '' ),
-    ];
+    $sanitized_input = [];
+    
+    // Sanitize project ID and security code
+    if ( isset( $input['project_id'] ) ) {
+        $sanitized_input['project_id'] = sanitize_text_field( $input['project_id'] );
+    }
+    
+    if ( isset( $input['security_code'] ) ) {
+        $sanitized_input['security_code'] = sanitize_text_field( $input['security_code'] );
+    }
+
+    return $sanitized_input;
 }
 
 // Render project ID field
 function statcounter_render_project_id_field() {
     $options = get_option( 'statcounter', [] );
-    $project_id = $options['project_id'] ?? '';
-    echo '<input type="text" id="statcounter_project_id" name="statcounter[project_id]" value="' . esc_attr( $project_id ) . '" class="regular-text" />';
+    $project_id = isset( $options['project_id'] ) ? esc_attr( $options['project_id'] ) : '';
+    ?>
+    <input type="text" id="statcounter_project_id" name="statcounter[project_id]" value="<?php echo $project_id; ?>" class="regular-text" />
+    <?php
 }
 
 // Render security code field
 function statcounter_render_security_code_field() {
     $options = get_option( 'statcounter', [] );
-    $security_code = $options['security_code'] ?? '';
-    echo '<input type="text" id="statcounter_security_code" name="statcounter[security_code]" value="' . esc_attr( $security_code ) . '" class="regular-text" />';
+    $security_code = isset( $options['security_code'] ) ? esc_attr( $options['security_code'] ) : '';
+    ?>
+    <input type="text" id="statcounter_security_code" name="statcounter[security_code]" value="<?php echo $security_code; ?>" class="regular-text" />
+    <?php
 }
 
 // Render settings page
 function statcounter_render_settings_page() {
+    if ( ! current_user_can( 'manage_options' ) ) {
+        return;
+    }
     ?>
     <div class="wrap">
         <h1><?php esc_html_e( 'StatCounter Settings', 'statcounter' ); ?></h1>
         <form method="post" action="options.php">
             <?php
+            // Output nonce, action, and option page fields for settings page
             settings_fields( 'statcounter_settings_group' );
             do_settings_sections( 'statcounter' );
             submit_button();
