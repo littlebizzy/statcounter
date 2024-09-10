@@ -132,18 +132,12 @@ function statcounter_add_tracking_code() {
     // New line after the closing PHP tag for proper HTML source formatting
     ?>
     
-    <script>
-    (function() {
-        const scProject = '<?php echo esc_js( $project_id ); ?>';
-        const scSecurity = '<?php echo esc_js( $security_code ); ?>';
-        
-        if (scProject && scSecurity) {
-            const script = document.createElement('script');
-            script.src = 'https://secure.statcounter.com/counter/counter.js';
-            document.body.appendChild(script);
-        }
-    })();
+    <script type="text/javascript">
+    var sc_project = <?php echo esc_js( $project_id ); ?>;
+    var sc_invisible = 1;
+    var sc_security = "<?php echo esc_js( $security_code ); ?>";
     </script>
+    <script type="text/javascript" src="https://www.statcounter.com/counter/counter.js" async></script>
     <?php
 }
 add_action( 'wp_footer', 'statcounter_add_tracking_code', PHP_INT_MAX );
