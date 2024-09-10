@@ -26,13 +26,15 @@ add_filter( 'gu_override_dot_org', function( $overrides ) {
 // Add StatCounter settings page to admin menu
 function statcounter_add_settings_page() {
     add_options_page(
-        __( 'StatCounter Settings', 'statcounter' ),
-        __( 'StatCounter', 'statcounter' ),
-        'manage_options',
-        'statcounter',
-        'statcounter_render_settings_page'
+        __( 'StatCounter Settings', 'statcounter' ),  // Page title
+        __( 'StatCounter', 'statcounter' ),           // Menu title
+        'manage_options',                             // Capability
+        'statcounter',                                // Menu slug
+        'statcounter_render_settings_page'            // Callback function
     );
 }
+
+// Hook into the admin menu to add the settings page
 add_action( 'admin_menu', 'statcounter_add_settings_page' );
 
 // Register and initialize settings
@@ -70,13 +72,18 @@ add_action( 'admin_init', 'statcounter_register_settings' );
 
 // Sanitize settings input
 function statcounter_sanitize_settings( $input ) {
-    $sanitized_input = [];
+    // Initialize with default values to ensure keys exist
+    $sanitized_input = [
+        'project_id'    => '',
+        'security_code' => '',
+    ];
     
-    // Sanitize project ID and security code
+    // Sanitize project ID
     if ( isset( $input['project_id'] ) ) {
         $sanitized_input['project_id'] = sanitize_text_field( $input['project_id'] );
     }
-    
+
+    // Sanitize security code
     if ( isset( $input['security_code'] ) ) {
         $sanitized_input['security_code'] = sanitize_text_field( $input['security_code'] );
     }
@@ -86,7 +93,10 @@ function statcounter_sanitize_settings( $input ) {
 
 // Render project ID field
 function statcounter_render_project_id_field() {
+    // Retrieve the 'statcounter' option from the database
     $options = get_option( 'statcounter', [] );
+    
+    // Check if 'project_id' exists and escape it for safe output
     $project_id = isset( $options['project_id'] ) ? esc_attr( $options['project_id'] ) : '';
     ?>
     <input type="text" id="statcounter_project_id" name="statcounter[project_id]" value="<?php echo $project_id; ?>" class="regular-text" />
@@ -95,7 +105,10 @@ function statcounter_render_project_id_field() {
 
 // Render security code field
 function statcounter_render_security_code_field() {
+    // Retrieve the 'statcounter' option from the database
     $options = get_option( 'statcounter', [] );
+    
+    // Check if 'security_code' exists and escape it for safe output
     $security_code = isset( $options['security_code'] ) ? esc_attr( $options['security_code'] ) : '';
     ?>
     <input type="text" id="statcounter_security_code" name="statcounter[security_code]" value="<?php echo $security_code; ?>" class="regular-text" />
@@ -110,7 +123,7 @@ function statcounter_render_settings_page() {
     ?>
     <div class="wrap">
         <h1><?php esc_html_e( 'StatCounter Settings', 'statcounter' ); ?></h1>
-        <form method="post" action="options.php">
+        <form method="post" action="<?php echo esc_url( admin_url( 'options.php' ) ); ?>">
             <?php
             // Output nonce, action, and option page fields for settings page
             settings_fields( 'statcounter_settings_group' );
@@ -124,10 +137,15 @@ function statcounter_render_settings_page() {
 
 // Add the tracking code to the footer
 function statcounter_add_tracking_code() {
-    // Retrieve the settings from the database
-    $settings = get_option( 'statcounter', [] );
-    $project_id = $settings['project_id'] ?? '';
-    $security_code = $settings['security_code'] ?? '';
+    // Retrieve the settings from the database, ensure defaults
+    $settings = get_option( 'statcounter', [
+        'project_id' => '',
+        'security_code' => ''
+    ]);
+
+    // Sanitize and ensure values are strings
+    $project_id = sanitize_text_field( $settings['project_id'] );
+    $security_code = sanitize_text_field( $settings['security_code'] );
 
     // New line after the closing PHP tag for proper HTML source formatting
     ?>
