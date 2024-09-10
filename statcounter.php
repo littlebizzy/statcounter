@@ -45,8 +45,8 @@ add_action( 'admin_init', 'statcounter_register_settings' );
 // Sanitize settings input
 function statcounter_sanitize_settings( $input ) {
     return [
-        'project_id'    => sanitize_text_field( $input['project_id'] ?? '' ),
-        'security_code' => sanitize_text_field( $input['security_code'] ?? '' ),
+        'project_id'    => sanitize_text_field( $input['project_id'] ),
+        'security_code' => sanitize_text_field( $input['security_code'] ),
     ];
 }
 
@@ -62,7 +62,12 @@ function statcounter_render_settings_page() {
 
     settings_errors( 'statcounter_messages' );
 
-    $settings = get_option( 'statcounter', [ 'project_id' => '', 'security_code' => '' ] );
+    // Retrieve options from the database
+    $settings = get_option( 'statcounter', [] );
+
+    // Use the existing values from the database (empty fields if not set)
+    $project_id    = $settings['project_id'] ?? '';
+    $security_code = $settings['security_code'] ?? '';
     ?>
     <div class="wrap">
         <h1><?php esc_html_e( 'StatCounter Settings', 'statcounter' ); ?></h1>
@@ -76,7 +81,7 @@ function statcounter_render_settings_page() {
                         <label for="statcounter_project_id"><?php esc_html_e( 'Project ID', 'statcounter' ); ?></label>
                     </th>
                     <td>
-                        <input type="text" id="statcounter_project_id" name="statcounter[project_id]" value="<?php echo esc_attr( $settings['project_id'] ); ?>" class="regular-text" />
+                        <input type="text" id="statcounter_project_id" name="statcounter[project_id]" value="<?php echo esc_attr( $project_id ); ?>" class="regular-text" />
                     </td>
                 </tr>
                 <tr>
@@ -84,7 +89,7 @@ function statcounter_render_settings_page() {
                         <label for="statcounter_security_code"><?php esc_html_e( 'Security Code', 'statcounter' ); ?></label>
                     </th>
                     <td>
-                        <input type="text" id="statcounter_security_code" name="statcounter[security_code]" value="<?php echo esc_attr( $settings['security_code'] ); ?>" class="regular-text" />
+                        <input type="text" id="statcounter_security_code" name="statcounter[security_code]" value="<?php echo esc_attr( $security_code ); ?>" class="regular-text" />
                     </td>
                 </tr>
             </table>
@@ -94,24 +99,28 @@ function statcounter_render_settings_page() {
     <?php
 }
 
-// Add the tracking code to the footer
+// Add the tracking code to the footer, always inject JS
 function statcounter_add_tracking_code() {
-    $settings = get_option( 'statcounter', [ 'project_id' => '', 'security_code' => '' ] );
+    // Retrieve the settings from the database
+    $settings = get_option( 'statcounter', [] );
 
-    if ( ! empty( $settings['project_id'] ) && ! empty( $settings['security_code'] ) ) {
-        ?>
-        <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const scProject = '<?php echo esc_js( $settings['project_id'] ); ?>';
-            const scSecurity = '<?php echo esc_js( $settings['security_code'] ); ?>';
-            const scJsHost = document.location.protocol === 'https:' ? 'https://secure.' : 'http://www.';
-            const script = document.createElement('script');
-            script.src = scJsHost + 'statcounter.com/counter/counter.js';
-            document.body.appendChild(script);
-        });
-        </script>
-        <?php
-    }
+    // Use empty strings as placeholders if the settings are empty
+    $project_id    = ! empty( $settings['project_id'] ) ? $settings['project_id'] : '';
+    $security_code = ! empty( $settings['security_code'] ) ? $settings['security_code'] : '';
+
+    // Always output the script, even with empty values
+    ?>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var scProject = '<?php echo esc_js( $project_id ); ?>';
+        var scSecurity = '<?php echo esc_js( $security_code ); ?>';
+        var scJsHost = document.location.protocol === 'https:' ? 'https://secure.' : 'http://www.';
+        var script = document.createElement('script');
+        script.src = scJsHost + 'statcounter.com/counter/counter.js';
+        document.body.appendChild(script);
+    });
+    </script>
+    <?php
 }
 add_action( 'wp_footer', 'statcounter_add_tracking_code', PHP_INT_MAX );
 
