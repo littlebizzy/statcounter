@@ -4,6 +4,10 @@ Optimized StatCounter tracking
 
 ## Changelog
 
+### 2.0.1
+- migrate old options `project_id` and `security_code` to new `statcounter` option array if exist / not exist
+- delete old options if options migration occurs
+
 ### 2.0.0
 - completely refactored code to WordPress standards
 - latest version of StatCounter tracking snippet (HTTPS-only now)
