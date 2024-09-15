@@ -3,7 +3,7 @@
 Plugin Name: StatCounter
 Plugin URI: https://www.littlebizzy.com/plugins/statcounter
 Description: Optimized StatCounter tracking
-Version: 2.0.0
+Version: 2.0.1
 Author: LittleBizzy
 Author URI: https://www.littlebizzy.com
 License: GPLv3
@@ -69,6 +69,33 @@ function statcounter_register_settings() {
     );
 }
 add_action( 'admin_init', 'statcounter_register_settings' );
+
+// Migrate old settings from individual options to the new array structure
+function statcounter_migrate_old_settings() {
+    // Check if old individual options exist
+    $old_project_id = get_option( 'project_id' );
+    $old_security_code = get_option( 'security_code' );
+
+    // Retrieve the existing statcounter array
+    $new_settings = get_option( 'statcounter', [] );
+
+    // Only add old values if the new settings do not already have them
+    if ( $old_project_id !== false && empty( $new_settings['project_id'] ) ) {
+        $new_settings['project_id'] = sanitize_text_field( $old_project_id );
+        delete_option( 'project_id' ); // Optionally delete old individual option
+    }
+
+    if ( $old_security_code !== false && empty( $new_settings['security_code'] ) ) {
+        $new_settings['security_code'] = sanitize_text_field( $old_security_code );
+        delete_option( 'security_code' ); // Optionally delete old individual option
+    }
+
+    // Save the new array only if it's been updated
+    if ( ! empty( $new_settings ) ) {
+        update_option( 'statcounter', $new_settings );
+    }
+}
+add_action( 'admin_init', 'statcounter_migrate_old_settings' );
 
 // Sanitize settings input
 function statcounter_sanitize_settings( $input ) {
