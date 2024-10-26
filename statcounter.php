@@ -3,25 +3,26 @@
 Plugin Name: StatCounter
 Plugin URI: https://www.littlebizzy.com/plugins/statcounter
 Description: Optimized StatCounter tracking
-Version: 2.0.1
+Version: 2.0.2
+Requires PHP: 7.0
 Author: LittleBizzy
 Author URI: https://www.littlebizzy.com
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt
-GitHub Plugin URI: https://github.com/littlebizzy/statcounter
+GitHub Plugin URI: littlebizzy/statcounter
 Primary Branch: master
 */
 
-// Prevent direct access
+// prevent direct access
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-// Disable WordPress.org updates for this plugin
+// disable wordpress.org updates for this plugin
 add_filter( 'gu_override_dot_org', function( $overrides ) {
     $overrides[] = 'statcounter/statcounter.php';
     return $overrides;
-});
+}, 999 );
 
 // Add StatCounter settings page to admin menu
 function statcounter_add_settings_page() {
