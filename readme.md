@@ -4,6 +4,10 @@ Optimized StatCounter tracking
 
 ## Changelog
 
+### 2.0.2
+- added `Requires PHP` plugin header
+- improved `gu_override_dot_org` snippet
+
 ### 2.0.1
 - migrate old options `project_id` and `security_code` to new `statcounter` option array if exist / not exist
 - delete old options if options migration occurs
@@ -17,7 +21,7 @@ Optimized StatCounter tracking
 - support for Multisite
 
 ### 1.1.1
-- improved disable wordpress.org snippet
+- improved `gu_override_dot_org` snippet
 
 ### 1.1.0
 - major code restructure
